@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking System - История</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-icon">P</div>
+        <div>
+            <h1>Parking System</h1>
+            <p>История на паркирането</p>
+        </div>
+    </div>
+
+    <nav>
+        <a th:href="@{/}">Табло</a>
+        <a th:href="@{/history}" class="active">История</a>
+    </nav>
+
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <div>
+            <h2>История на паркирането</h2>
+            <p>Всички регистрирани паркинг сесии.</p>
+        </div>
+    </section>
+
+    <section class="panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Паркинг сесии</h2>
+                <p>Данни от базата данни.</p>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table class="history-table">
+
+                <thead>
+                <tr>
+                    <th>Регистрационен номер</th>
+                    <th>Тип превозно средство</th>
+                    <th>Начало</th>
+                    <th>Край</th>
+                    <th>Продължителност</th>
+                    <th>Статус</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="parkingSession : ${sessions}">
+
+                    <td>
+                        <strong th:text="${parkingSession.vehicle.licensePlate}">
+                            CA1234AB
+                        </strong>
+                    </td>
+
+                    <td th:text="${parkingSession.vehicle.type.label}">
+                        Автомобил
+                    </td>
+
+                    <td th:text="${#temporals.format(parkingSession.entryTime, 'dd.MM.yyyy HH:mm')}">
+                        Дата
+                    </td>
+
+                    <td th:text="${parkingSession.exitTime != null
+                        ? #temporals.format(parkingSession.exitTime, 'dd.MM.yyyy HH:mm')
+                        : '—'}">
+                        —
+                    </td>
+
+                    <td>
+                        <span th:text="${parkingSession.durationMinutes} + ' мин.'">
+                            0 мин.
+                        </span>
+                    </td>
+
+                    <td>
+                        <span th:if="${parkingSession.exitTime == null}"
+                              class="history-status active-status">
+                            Активна
+                        </span>
+
+                        <span th:if="${parkingSession.exitTime != null}"
+                              class="history-status completed-status">
+                            Приключена
+                        </span>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(sessions)}">
+                    <td colspan="6" class="empty-state">
+                        Все още няма паркинг сесии.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    ParkFlow © 2026 · История на паркирането
+</footer>
+
+</body>
+</html>
