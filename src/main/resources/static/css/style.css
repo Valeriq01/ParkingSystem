@@ -1,0 +1,702 @@
+:root {
+    --background: #0F172A;
+    --sidebar: #111827;
+    --card: #1E293B;
+    --card-light: #334155;
+
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+
+    --accent: #3B82F6;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --purple: #8B5CF6;
+
+    --border: rgba(148, 163, 184, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text-primary);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.topbar {
+    min-height: 78px;
+    background: var(--sidebar);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 5%;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 800;
+    color: white;
+}
+
+.brand h1 {
+    font-size: 23px;
+    letter-spacing: 0.5px;
+}
+
+.brand p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 10px;
+}
+
+.topbar nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 10px 17px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.topbar nav a:hover,
+.topbar nav a.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent);
+}
+
+.container {
+    width: min(1500px, 92%);
+    margin: 35px auto;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.page-heading h2 {
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+.page-heading p,
+.panel-heading p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.status-indicator {
+    color: var(--success);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.stat-card p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.stat-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.stat-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stat-icon.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent);
+}
+
+.stat-icon.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--success);
+}
+
+.stat-icon.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+}
+
+.stat-icon.purple {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--purple);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.9fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 23px;
+    min-width: 0;
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-heading h2 {
+    font-size: 19px;
+    margin-bottom: 6px;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 24px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid var(--border);
+}
+
+.legend span {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+}
+
+.legend-box.free {
+    background: var(--success);
+}
+
+.legend-box.motorcycle {
+    background: var(--warning);
+}
+
+.legend-box.car {
+    background: var(--accent);
+}
+
+.legend-box.truck {
+    background: var(--purple);
+}
+
+.level-section {
+    margin-bottom: 28px;
+}
+
+.level-section h3 {
+    font-size: 16px;
+    margin-bottom: 14px;
+    color: var(--text-primary);
+    padding-left: 3px;
+}
+
+.parking-row-wrapper {
+    margin-bottom: 17px;
+}
+
+.row-label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.parking-row {
+    display: grid;
+    gap: 7px;
+    width: 100%;
+}
+
+.parking-cell {
+    min-width: 0;
+    min-height: 76px;
+    border-radius: 9px;
+    overflow: visible;
+    position: relative;
+}
+
+.free-cell {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.55);
+    color: var(--success);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.free-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.free-content span {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.free-content small {
+    font-size: 10px;
+}
+
+.vehicle-cell {
+    color: white;
+    border: none;
+}
+
+.vehicle-cell.motorcycle {
+    background: var(--warning);
+}
+
+.vehicle-cell.car {
+    background: var(--accent);
+}
+
+.vehicle-cell.truck {
+    background: var(--purple);
+}
+
+.vehicle-details {
+    height: 100%;
+    width: 100%;
+}
+
+.vehicle-summary {
+    height: 100%;
+    min-height: 76px;
+    padding: 8px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 9px;
+}
+
+.vehicle-summary::-webkit-details-marker {
+    display: none;
+}
+
+.vehicle-summary:hover {
+    filter: brightness(1.12);
+}
+
+.vehicle-symbol {
+    font-size: 21px;
+}
+
+.vehicle-summary strong {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.vehicle-summary small {
+    font-size: 10px;
+}
+
+.vehicle-info {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 8px);
+    left: 0;
+    width: min(290px, 85vw);
+    padding: 18px;
+    background: var(--sidebar);
+    border: 1px solid var(--card-light);
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+}
+
+.vehicle-info h4 {
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.vehicle-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 9px;
+}
+
+.vehicle-info strong {
+    color: var(--text-primary);
+}
+
+.vehicle-details:not([open]) .vehicle-info {
+    display: none;
+}
+
+.parking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.parking-form label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.parking-form input,
+.parking-form select {
+    width: 100%;
+    padding: 13px;
+    background: var(--background);
+    color: var(--text-primary);
+    border: 1px solid var(--card-light);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.parking-form input:focus,
+.parking-form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.parking-form input::placeholder {
+    color: #64748B;
+}
+
+.parking-form select option {
+    background: var(--card);
+    color: var(--text-primary);
+}
+
+.park-button,
+.release-button {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.park-button {
+    margin-top: 10px;
+    background: var(--accent);
+}
+
+.park-button:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+}
+
+.release-button {
+    margin-top: 12px;
+    background: var(--danger);
+}
+
+.release-button:hover {
+    background: #DC2626;
+}
+
+.active-vehicle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.active-vehicle:last-child {
+    border-bottom: none;
+}
+
+.active-vehicle div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.active-vehicle strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.active-vehicle span {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.active-badge {
+    color: var(--success) !important;
+    background: rgba(34, 197, 94, 0.12);
+    border-radius: 20px;
+    padding: 5px 9px;
+    white-space: nowrap;
+}
+
+.message {
+    padding: 14px 17px;
+    border-radius: 9px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.message.success {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: var(--success);
+}
+
+.message.error {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #F87171;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 25px 10px;
+}
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 35px;
+}
+
+@media (max-width: 1050px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .topbar nav {
+        width: 100%;
+    }
+
+    .topbar nav a {
+        flex: 1;
+        text-align: center;
+    }
+
+    .container {
+        width: 94%;
+        margin: 22px auto;
+    }
+
+    .page-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+    }
+
+    .stat-card {
+        padding: 13px;
+        gap: 9px;
+    }
+
+    .stat-card h3 {
+        font-size: 23px;
+    }
+
+    .stat-card p {
+        font-size: 11px;
+    }
+
+    .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 17px;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .parking-row {
+        gap: 4px;
+    }
+
+    .parking-cell {
+        min-height: 65px;
+    }
+
+    .vehicle-summary {
+        min-height: 65px;
+    }
+
+    .vehicle-summary strong {
+        font-size: 9px;
+    }
+
+    .vehicle-summary small {
+        font-size: 8px;
+    }
+
+    .free-content small {
+        font-size: 8px;
+    }
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+}
+
+.history-table th {
+    text-align: left;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 15px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.history-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.history-table tbody tr:hover {
+    background: rgba(148, 163, 184, 0.05);
+}
+
+.history-table td strong {
+    color: var(--accent);
+}
+
+.history-status {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 6px 11px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.active-status {
+    color: var(--success);
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.completed-status {
+    color: var(--text-secondary);
+    background: rgba(148, 163, 184, 0.12);
+}
+

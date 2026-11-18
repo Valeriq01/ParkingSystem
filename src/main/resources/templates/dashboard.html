@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking System - Управление на паркинг</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">P</div>
+        <div>
+            <h1>Parking System</h1>
+            <p>Система за управление на паркинг</p>
+        </div>
+    </div>
+
+    <nav>
+        <a th:href="@{/}" class="active">Табло</a>
+        <a th:href="@{/history}">История</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <div>
+            <h2>Табло за управление</h2>
+            <p>Следи заетостта и управлявай паркоместата.</p>
+        </div>
+        <span class="status-indicator">
+            <span class="status-dot"></span>
+            Системата е активна
+        </span>
+    </section>
+
+    <div th:if="${success}" class="message success"
+         th:text="${success}"></div>
+
+    <div th:if="${error}" class="message error"
+         th:text="${error}"></div>
+
+    <section class="stats-grid">
+
+        <article class="stat-card">
+            <div class="stat-icon blue">P</div>
+            <div>
+                <p>Общо паркоместа</p>
+                <h3 th:text="${totalSpots}">0</h3>
+            </div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <div>
+                <p>Свободни места</p>
+                <h3 th:text="${freeSpots}">0</h3>
+            </div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon red">●</div>
+            <div>
+                <p>Заети места</p>
+                <h3 th:text="${occupiedSpots}">0</h3>
+            </div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon purple">↗</div>
+            <div>
+                <p>Активни сесии</p>
+                <h3 th:text="${#lists.size(activeSessions)}">0</h3>
+            </div>
+        </article>
+
+    </section>
+
+    <div class="dashboard-grid">
+
+        <section class="panel parking-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Карта на паркинга</h2>
+                    <p>Избери превозно средство за подробности.</p>
+                </div>
+            </div>
+
+            <div class="legend">
+                <span><i class="legend-box free"></i> Свободно</span>
+                <span><i class="legend-box motorcycle"></i> Мотоциклет</span>
+                <span><i class="legend-box car"></i> Автомобил</span>
+                <span><i class="legend-box truck"></i> Камион</span>
+            </div>
+
+            <div th:if="${#lists.isEmpty(parkingLevels)}"
+                 class="empty-state">
+                Няма налични паркоместа.
+            </div>
+
+            <div th:each="level : ${parkingLevels}"
+                 class="level-section">
+
+                <h3>
+                    Ниво <span th:text="${level.levelNumber}">1</span>
+                    <small class="level-stats"
+                           th:text="|${level.freeSpots} / ${level.totalSpots} свободни|">0 / 0</small>
+                </h3>
+
+                <div th:each="row : ${level.rows}"
+                     class="parking-row-wrapper">
+
+                    <span class="row-label">
+                        Ред <span th:text="${row.rowNumber}">1</span>
+                        <small th:text="|${row.freeSpots}/${row.totalSpots}|">0/0</small>
+                    </span>
+
+                    <div class="parking-row"
+                         th:style="|grid-template-columns: repeat(${row.totalSpots}, minmax(0, 1fr));|">
+
+                        <div th:each="cell : ${row.cells}"
+                             th:style="|grid-column: span ${cell.span};|"
+                             th:class="${cell.vehicle
+                                ? 'parking-cell vehicle-cell ' + cell.vehicleType
+                                : 'parking-cell free-cell'}">
+
+                            <div th:if="${!cell.vehicle}"
+                                 class="free-content">
+                                <span th:text="${cell.spotNumber}">1</span>
+                                <small>Свободно</small>
+                            </div>
+
+                            <details th:if="${cell.vehicle}"
+                                     class="vehicle-details">
+
+                                <summary class="vehicle-summary">
+                                    <strong th:text="${cell.licensePlate}">
+                                        CA1234AB
+                                    </strong>
+
+                                    <small th:text="${cell.vehicleLabel}">
+                                        Автомобил
+                                    </small>
+
+                                </summary>
+
+                                <div class="vehicle-info">
+
+                                    <h4 th:text="${cell.licensePlate}">
+                                        CA1234AB
+                                    </h4>
+
+                                    <p>
+                                        Тип:
+                                        <strong th:text="${cell.vehicleLabel}">
+                                            Автомобил
+                                        </strong>
+                                    </p>
+
+                                    <p>
+                                        Начало:
+                                        <strong th:text="${cell.entryTime}">
+                                            Дата
+                                        </strong>
+                                    </p>
+
+                                    <p>
+                                        Заети места:
+                                        <strong th:text="${cell.span}">
+                                            2
+                                        </strong>
+                                    </p>
+
+                                    <form th:action="@{/release/{id}(id=${cell.sessionId})}"
+                                          method="post">
+
+                                        <button type="submit"
+                                                class="release-button">
+                                            Освободи паркоместата
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                            </details>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <aside class="side-panel">
+
+            <section class="panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h2>Настаняване</h2>
+                        <p>Добави ново превозно средство.</p>
+                    </div>
+                </div>
+
+                <form th:action="@{/park}"
+                      method="post"
+                      class="parking-form">
+
+                    <label for="licensePlate">
+                        Регистрационен номер
+                    </label>
+
+                    <input
+                            id="licensePlate"
+                            name="licensePlate"
+                            type="text"
+                            placeholder="Например: CA1234AB"
+                            required
+                    >
+
+                    <label for="vehicleType">
+                        Тип превозно средство
+                    </label>
+
+                    <select id="vehicleType"
+                            name="vehicleType"
+                            required>
+
+                        <option value="MOTORCYCLE">
+                            Мотоциклет – 1 място
+                        </option>
+
+                        <option value="CAR" selected>
+                            Автомобил – 2 места
+                        </option>
+
+                        <option value="TRUCK">
+                            Камион – 4 места
+                        </option>
+
+                    </select>
+
+                    <button type="submit" class="park-button">
+                        + Настани превозното средство
+                    </button>
+
+                </form>
+
+            </section>
+
+            <section class="panel active-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h2>Активни паркирания</h2>
+                        <p>Превозни средства в паркинга.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(activeSessions)}"
+                     class="empty-state">
+                    В момента няма паркирани превозни средства.
+                </div>
+
+                <div th:each="parkingSession : ${activeSessions}"
+                     class="active-vehicle">
+
+                    <div>
+                        <strong th:text="${parkingSession.vehicle.licensePlate}">
+                            CA1234AB
+                        </strong>
+
+                        <span th:text="${parkingSession.vehicle.type.label}">
+                            Автомобил
+                        </span>
+                    </div>
+
+                    <span class="active-badge">Заето</span>
+
+                </div>
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    ParkFlow © 2026 · Система за управление на паркинг
+</footer>
+
+</body>
+</html>
