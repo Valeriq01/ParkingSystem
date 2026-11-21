@@ -16,6 +16,4 @@ public interface ParkingSpotRepository
     );
 
     List<ParkingSpot> findBySession_Id(Long sessionId);
-
-    long countByStatus(SpotStatus status);
 }

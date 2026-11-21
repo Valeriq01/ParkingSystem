@@ -1,3 +1,5 @@
+package ParkingSystem.observer;
+
 import ParkingSystem.observer.VehicleExitedEvent;
 import ParkingSystem.observer.VehicleParkedEvent;
 import org.slf4j.Logger;

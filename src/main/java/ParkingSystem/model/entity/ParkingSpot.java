@@ -88,8 +88,4 @@ public class ParkingSpot implements ParkingComponent {
     public int getFreeSpots() {
         return status == SpotStatus.FREE ? 1 : 0;
     }
-
-    public String getDisplayName() {
-        return "Н" + levelNumber + " · Р" + rowNumber + " · М" + spotNumber;
-    }
 }
